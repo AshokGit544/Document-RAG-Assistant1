@@ -1,56 +1,13 @@
-# Document RAG Assistant
+I built an Enterprise Finance GenAI Copilot for finance operations support at Wells Fargo. In this project, I created a document intelligence workflow where finance users could upload operational finance PDFs and ask questions in natural language.
 
-This project is a simple document question answering system.
+I independently handled the complete workflow from document ingestion to final response generation. First, I extracted text from finance documents using Python and PDF processing libraries. Then I cleaned the data, removed unwanted characters, and split the document into section-based chunks to preserve business context.
 
-It takes a document, splits it into chunks, converts the chunks into searchable vectors, and retrieves the most relevant chunks for a user question. Then it gives a grounded answer using only the retrieved document content.
+After chunking, I added metadata enrichment like finance topic classification, source file tracking, and access-level tagging. I created categories such as invoice operations, reconciliation, customer support, risk compliance, security access, and AI governance so the retrieval system could search only the correct business area.
 
-## What this project does
+For retrieval, I implemented a hybrid retrieval approach using TF-IDF vectorization, cosine similarity scoring, keyword matching, metadata filtering, and reranking-style final scoring. This improved retrieval quality and helped return more accurate finance-related answers.
 
-- uploads a document
-- reads PDF, DOCX, or TXT files
-- cleans the text
-- splits the document into chunks
-- creates TF-IDF vectors
-- retrieves the most relevant chunks for a question
-- generates a grounded answer from retrieved text
-- saves output files
+I also added RBAC-based filtering logic so users could retrieve only authorized finance content. Then I built grounded response generation where the system generated answers only from retrieved document context and avoided unsupported responses or hallucinations.
 
-## Main files
+To improve trust and compliance, I added validation checks, audit logging, source tracking, confidence scoring, and safe fallback handling whenever the answer was not available in the approved finance document.
 
-- `document_chunks.csv`
-- `sample_query_answers.csv`
-- `app.py`
-- `requirements.txt`
-- `README.md`
-
-## Tools used
-
-- Python
-- pandas
-- scikit-learn
-- pypdf
-- python-docx
-- gradio
-
-## Example questions
-
-- What does the document say about AI governance?
-- What systems are mentioned in the enterprise architecture?
-- What are the future roadmap priorities?
-- How does the organization handle security?
-- What does the document say about digital transformation?
-
-## Why this project is useful
-
-This project is useful for understanding how document retrieval and grounded question answering work in a simple way.
-
-It shows how a document can be turned into searchable chunks and used to answer questions without relying on a paid API.
-
-## How to run
-
-1. Open the notebook in Google Colab
-2. Upload your document
-3. Run all cells
-4. Ask questions
-5. Review the saved output files
-6. Upload the project files to GitHub
+Finally, I built a Gradio-based UI where users could upload finance documents, ask questions, review retrieved source chunks, and see validation status. This project helped simulate a real enterprise finance GenAI workflow similar to production-level RAG applications used in banking environments.
